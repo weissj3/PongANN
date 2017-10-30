@@ -60,6 +60,7 @@ void Pong::Initialize()
     m_trainer = new ANNAITrainer((ANNAI*)m_player1, (ANNAI*)m_player2);
     
     m_ball = new Ball(Vector2(SCREEN_WIDTH/2, SCREEN_HEIGHT/2), Vector2(3, 3), 3);
+    m_ball->setRandVel(5.0);
     m_physicsHandler->RegisterPhysicsObject( (PhysicsObject*) m_ball);
 }
 
@@ -125,6 +126,7 @@ void Pong::CheckWinCondition()
         SDL_UpdateWindowSurface( m_window );
         if(m_player1->GetScore() + m_player2->GetScore() == 10)
         {
+            std::cout << "Score:  " << m_player1->GetScore() << " to " << m_player2->GetScore() << std::endl;
             m_trainer->Update();
             m_player1->ResetScore();
             m_player2->ResetScore();

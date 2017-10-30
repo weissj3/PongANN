@@ -14,6 +14,7 @@ private:
     unsigned int m_score;
     unsigned int m_playerNumber;
     
+    
 protected:
 
     PlayerType m_type;

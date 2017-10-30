@@ -13,15 +13,20 @@ struct Parameters
     Parameters(unsigned int numParams, unsigned int id, float like = 1);
     Parameters(const std::vector <float> &other, unsigned int id, float like = 1);
     Parameters() {}
+    friend std::ostream& operator<<(std::ostream & ostr, const Parameters &param);
+    friend std::istream& operator>>(std::istream & istr, Parameters &param);
 };
 
 class Optimizer
 {
 protected:
     unsigned int m_currentResult;
+    unsigned int m_currentGeneration;
     std::random_device m_rd;
     std::mt19937 m_mt;
     std::uniform_real_distribution<float> m_dist;
+    std::normal_distribution<float> m_normDist;
+
 
     std::vector<Parameters> m_parameters;
     std::vector<float> m_upperBound;

@@ -2,6 +2,7 @@
 #define _PONG_H_
 
 #include <SDL.h>
+#include <SDL_ttf.h>
 #include <iostream>
 #include "Physics.h"
 
@@ -29,6 +30,7 @@ private:
     static Ball*            m_ball;
     static ANNAITrainer*    m_trainer;
     static bool             m_slow;
+    static TTF_Font*        m_sans;
 
     static bool             m_quit;
 
@@ -46,7 +48,7 @@ public:
     static Player* GetPlayer1() { return m_player1; }
     static Player* GetPlayer2() { return m_player2; }
     static Ball* getBall() { return m_ball; }
-    
+    static TTF_Font* getFont() { return m_sans; }
     
 };
 

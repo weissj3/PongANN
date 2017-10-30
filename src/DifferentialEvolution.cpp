@@ -1,4 +1,5 @@
 #include "DifferentialEvolution.h"
+#include <iostream>
 
 DifferentialEvolution::DifferentialEvolution(unsigned int populationSize, unsigned int numParams) : Optimizer(populationSize, numParams)
 {
@@ -10,7 +11,7 @@ DifferentialEvolution::DifferentialEvolution(unsigned int populationSize, unsign
 
 Parameters DifferentialEvolution::getNewParams()
 {
-    std::uniform_int_distribution <unsigned int> getRandomParam(0, m_parameters.size());
+    std::uniform_int_distribution <unsigned int> getRandomParam(0, m_parameters.size()-1);
     Parameters newParameters = m_parameters[m_currentResult];
     newParameters.m_likelihood = 0;
     Parameters Parent = m_parameters[0];
@@ -19,7 +20,7 @@ Parameters DifferentialEvolution::getNewParams()
     {
         if(m_parameters[i].m_likelihood > Parent.m_likelihood)
         {
-            Parent = m_parameters[0];
+            Parent = m_parameters[i];
         }
     }
     
@@ -42,10 +43,29 @@ Parameters DifferentialEvolution::getNewParams()
     }
     
     ++m_currentResult;
+    if(m_currentResult == m_parameters.size())
+    {
+        m_currentResult = 0;
+        ++m_currentGeneration;
+    }
     return newParameters;
 }
 
-void DifferentialEvolution::Print(std::string filename)
+std::ostream& operator<<(std::ostream & ostr, const DifferentialEvolution &DE)
 {
-
+    ostr << "<Differential Evolution>" << std::endl;
+    ostr << "\t<CurrentResult>" << std::endl;
+    ostr << "\t\t" << DE.m_currentResult<< std::endl;
+    ostr << "\t</CurrentResult>" << std::endl;
+    ostr << "\t<CurrentGeneration>" << std::endl;
+    ostr << "\t\t" << DE.m_currentGeneration<< std::endl;
+    ostr << "\t</CurrentGeneration>" << std::endl;
+    ostr << "\t<PopulationSize>" << std::endl;
+    ostr << "\t\t" << DE.m_parameters.size() << std::endl;
+    ostr << "\t</PopulationSize>" << std::endl;
+    for(unsigned int i = 0; i < DE.m_parameters.size(); ++i)
+    {
+        ostr << DE.m_parameters[i];
+    }
+    ostr << "</Differential Evolution>" << std::endl;
 }

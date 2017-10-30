@@ -11,6 +11,7 @@ class Ball : public PhysicsObject
 private:
     
     unsigned int m_color;
+    unsigned int m_roundNumber;
     
 public:
     Ball(Vector2 pos, Vector2 vel, float rad);

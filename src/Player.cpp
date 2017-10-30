@@ -13,6 +13,7 @@ Player::Player(unsigned int playerNum)
     }
     Pong::getPhysicsHandler()->RegisterPhysicsObject( (PhysicsObject*) m_pad);
     m_type = UNKNOWN;
+    m_score = 0;
 }
 
 Player::~Player()

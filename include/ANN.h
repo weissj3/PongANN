@@ -13,8 +13,8 @@ private:
     std::vector <arma::Mat <float> > m_layers;    
 
 public:
-    ANN(unsigned int nodes, unsigned int layers, unsigned int outputs);
-    ANN(unsigned int nodes, unsigned int hidden_layers, unsigned int outputs, const Parameters &params);    
+    ANN(unsigned int inputs, unsigned int nodes, unsigned int layers, unsigned int outputs);
+    ANN(unsigned int inputs, unsigned int nodes, unsigned int hidden_layers, unsigned int outputs, const Parameters &params);    
     
     void Print(std::string filename);
     void Read(std::string filename);

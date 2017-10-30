@@ -9,10 +9,11 @@ private:
     ANNAI *m_player1;
     ANNAI *m_player2;
     DifferentialEvolution m_DE;
+    unsigned int m_generation;
 
 public:
 
-    ANNAITrainer(ANNAI* p1, ANNAI* p2, unsigned int populationSize = 20, unsigned int n_layers = 2, unsigned int n_nodes = 3);
+    ANNAITrainer(ANNAI* p1, ANNAI* p2, unsigned int populationSize = 20);
     void Update();
 
 };

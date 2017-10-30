@@ -10,7 +10,7 @@ class DifferentialEvolution : public Optimizer
 public:
     DifferentialEvolution(unsigned int populationSize, unsigned int numParams);
     DifferentialEvolution(unsigned int populationSize, unsigned int numParams, const std::vector <float> &upper, const std::vector <float> &lower);
-    void Print(std::string filename);
+    friend std::ostream& operator<<(std::ostream & ostr, const DifferentialEvolution &DE);
     virtual Parameters getNewParams();
 
 

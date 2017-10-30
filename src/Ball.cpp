@@ -7,6 +7,7 @@ Ball::Ball( Vector2 pos, Vector2 vel, float rad ) : PhysicsObject( true, pos, ve
     //TO DO: Maybe make the color changable
     m_color = SDL_MapRGB( Pong::getSurface()->format, 0x00, 0x00, 0x00 );
     setType(PhysicsObject::PhysicsObjectType::BALL);
+    m_roundNumber = 0;
 
 }
 
@@ -57,13 +58,18 @@ void Ball::setRandVel( float mag )
     vel.x = cos(randAng) * mag;
     vel.y = sin(randAng) * mag;
     
-    if(dist(mt) > .5)
+    if(m_roundNumber >= 5)
     {
         vel.x *= -1;
     }
     if(dist(mt) > .5)
     {
         vel.y *= -1;
+    }
+    m_roundNumber++;
+    if(m_roundNumber == 10)
+    {
+        m_roundNumber = 0;
     }
     
     this->setVel(vel);

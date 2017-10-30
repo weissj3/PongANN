@@ -7,31 +7,30 @@
 //Matrix (row, col)
 
 //Add 1 to layers for output layer
-ANN::ANN(unsigned int nodes, unsigned int hidden_layers, unsigned int outputs) : m_layers(hidden_layers+1, arma::Mat <float>(nodes,nodes))
+ANN::ANN(unsigned int inputs, unsigned int nodes, unsigned int hidden_layers, unsigned int outputs) : m_layers(hidden_layers+1, arma::Mat <float>(nodes,nodes))
 {
     std::random_device rd;
     std::mt19937 mt(rd());
-    std::uniform_real_distribution<float> dist(0.0, 1.0);
-    m_layers[m_layers.size()-2].resize(nodes, outputs);
-    m_layers[m_layers.size()-1].resize(outputs, 1);
+    std::normal_distribution<float> dist(0.0, 2.0);
+    m_layers[0].resize(inputs, nodes);
+    m_layers[m_layers.size()-1].resize(nodes, outputs);
     for(int i = 0; i < m_layers.size(); i++)
     {
-        for(int j = 0; j < m_layers[i].n_rows; ++j)
+        for(int j = 0; j < m_layers[i].n_cols; ++j)
         {
-            float rowVal = dist(mt);
-            for(int k = 0; k < m_layers[i].n_cols; ++k)
+            for(int k = 0; k < m_layers[i].n_rows; ++k)
             {
-                m_layers[i](j, k) = rowVal;
+                m_layers[i](k, j) = dist(mt);
             }
         }
     }
 }
 
 //Add 1 to layers for output layer
-ANN::ANN(unsigned int nodes, unsigned int hidden_layers, unsigned int outputs, const Parameters &params) : m_layers(hidden_layers+1, arma::Mat <float>(nodes,nodes))
+ANN::ANN(unsigned int inputs, unsigned int nodes, unsigned int hidden_layers, unsigned int outputs, const Parameters &params) : m_layers(hidden_layers+1, arma::Mat <float>(nodes,nodes))
 {
-    m_layers[m_layers.size()-2].resize(nodes, outputs);
-    m_layers[m_layers.size()-1].resize(outputs, 1);
+    m_layers[0].resize(inputs, nodes);
+    m_layers[m_layers.size()-1].resize(nodes, outputs);
     int count = 0;
     for(int i = 0; i < m_layers.size(); i++)
     {
@@ -42,11 +41,10 @@ ANN::ANN(unsigned int nodes, unsigned int hidden_layers, unsigned int outputs, c
                 std::cerr << "Parameter Size doesn't match ANN Size.  Quitting." << std::endl;
                 exit(-1);
             }
-            float rowVal = params.m_values[count];
-            ++count;
             for(int k = 0; k < m_layers[i].n_cols; ++k)
             {
-                m_layers[i](j, k) = rowVal;
+                m_layers[i](j, k) = params.m_values[count];
+                ++count;
             }
         }
     }
@@ -92,26 +90,26 @@ void ANN::Read(std::string filename)
 std::vector<float> ANN::Evaluate(std::vector<float> input)
 {
     //Create input matrix from input
-    arma::Mat <float> inputMat(input.size(), m_layers[0].n_rows);
+    arma::Mat <float> inputMat(1, input.size());
     for( unsigned int i = 0; i < inputMat.n_rows; ++i )
     {
         for( unsigned int j = 0; j < inputMat.n_cols; ++j )
         {
-            inputMat(i, j) = input[i];
+            inputMat(i, j) = input[j];
         }
     }
     
     //Run Feed Forward
     for( unsigned int i = 0; i < m_layers.size(); ++i )
-    {
+    {       
         inputMat = tanh(inputMat * m_layers[i]);
     }
-    
+
     //Create output vector
     std::vector <float> output(inputMat.n_rows, 0);
-    for( unsigned int i = 0; i < inputMat.n_rows; ++i )
+    for( unsigned int i = 0; i < inputMat.n_cols; ++i )
     {
-        output[i] = inputMat(i, 0);
+        output[i] = inputMat(0, i);
     }
     return output;
 }
