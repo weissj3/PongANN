@@ -57,7 +57,8 @@ void Pong::Initialize()
     m_player1 = new ANNAI(1);
     m_player2 = new ANNAI(2);
     
-    m_trainer = new ANNAITrainer((ANNAI*)m_player1, (ANNAI*)m_player2);
+
+    m_trainer = new ANNAITrainer((ANNAI*)m_player1, (ANNAI*)m_player2, "DE_Iteration.xml");
     
     m_ball = new Ball(Vector2(SCREEN_WIDTH/2, SCREEN_HEIGHT/2), Vector2(3, 3), 3);
     m_ball->setRandVel(5.0);

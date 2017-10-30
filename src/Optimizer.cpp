@@ -68,6 +68,11 @@ std::ostream& operator<<(std::ostream & ostr, const Parameters & param)
     return ostr;
 }
 
+Optimizer::Optimizer() :  m_rd(), m_mt(m_rd()), m_dist(0.0, 1.0), m_normDist(0.0, 2.0), m_currentResult(0), m_currentGeneration(0)
+{
+}
+
+//None of this is used or implemented yet. 
 Optimizer::Optimizer(unsigned int populationSize, unsigned int numParams) : m_rd(), m_mt(m_rd()), m_dist(0.0, 1.0), m_normDist(0.0, 2.0), m_currentResult(0), m_currentGeneration(0), m_parameters(populationSize, Parameters(numParams, 0)), m_upperBound(numParams, 1.0), m_lowerBound(numParams, 0.0)
 {
     for(int i = 0; i < m_parameters.size(); i++)

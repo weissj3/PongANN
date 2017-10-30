@@ -33,6 +33,7 @@ protected:
     std::vector<float> m_lowerBound;
 
 public:
+    Optimizer();
     Optimizer(unsigned int populationSize, unsigned int numParams);
     Optimizer(unsigned int populationSize, unsigned int numParams, const std::vector <float> &upper, const std::vector <float> &lower);
     void insertParams(const Parameters &result);

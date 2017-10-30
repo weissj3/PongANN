@@ -14,6 +14,7 @@ private:
 public:
 
     ANNAITrainer(ANNAI* p1, ANNAI* p2, unsigned int populationSize = 20);
+    ANNAITrainer(ANNAI* p1, ANNAI* p2, std::string loadFile);
     void Update();
 
 };

@@ -1,6 +1,11 @@
 #include "DifferentialEvolution.h"
 #include <iostream>
 
+
+DifferentialEvolution::DifferentialEvolution() : Optimizer()
+{
+}
+
 DifferentialEvolution::DifferentialEvolution(unsigned int populationSize, unsigned int numParams) : Optimizer(populationSize, numParams)
 {
 }
@@ -53,19 +58,60 @@ Parameters DifferentialEvolution::getNewParams()
 
 std::ostream& operator<<(std::ostream & ostr, const DifferentialEvolution &DE)
 {
-    ostr << "<Differential Evolution>" << std::endl;
+    ostr << "<DifferentialEvolution>" << std::endl;
     ostr << "\t<CurrentResult>" << std::endl;
     ostr << "\t\t" << DE.m_currentResult<< std::endl;
     ostr << "\t</CurrentResult>" << std::endl;
     ostr << "\t<CurrentGeneration>" << std::endl;
     ostr << "\t\t" << DE.m_currentGeneration<< std::endl;
     ostr << "\t</CurrentGeneration>" << std::endl;
-    ostr << "\t<PopulationSize>" << std::endl;
-    ostr << "\t\t" << DE.m_parameters.size() << std::endl;
-    ostr << "\t</PopulationSize>" << std::endl;
+    ostr << "\t<ParameterList>" << std::endl;
     for(unsigned int i = 0; i < DE.m_parameters.size(); ++i)
     {
         ostr << DE.m_parameters[i];
     }
-    ostr << "</Differential Evolution>" << std::endl;
+    ostr << "\t</ParameterList>" << std::endl;
+    ostr << "</DifferentialEvolution>" << std::endl;
+}
+
+std::istream& operator>>(std::istream & istr, DifferentialEvolution & DE)
+{
+    while(!istr.eof())
+    {
+        std::string temp;
+        istr >> temp;
+        if(temp == "</DifferentialEvolution>")
+        {
+            break;
+        }
+        if(temp == "<CurrentResult>")
+        {
+            istr >> DE.m_currentResult;
+            istr >> temp;
+        }
+        if(temp == "<CurrentGeneration>")
+        {
+            istr >> DE.m_currentGeneration;
+            istr >> temp;
+        }
+        if(temp == "<ParameterList>")
+        {
+            while(!istr.eof())
+            {
+                istr >> temp;
+                if(temp == "</ParameterList>")
+                {
+                    break;
+                }
+                if(temp == "<parameters>")
+                {
+                    Parameters tempParam;
+                    istr >> tempParam;
+                    DE.m_parameters.push_back(tempParam);
+                }
+            }
+        }
+        
+    }  
+    return istr;
 }
