@@ -76,6 +76,7 @@ std::ostream& operator<<(std::ostream & ostr, const DifferentialEvolution &DE)
 
 std::istream& operator>>(std::istream & istr, DifferentialEvolution & DE)
 {
+    DE.m_parameters.clear();
     while(!istr.eof())
     {
         std::string temp;
