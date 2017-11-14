@@ -5,7 +5,7 @@ Paddle::Paddle(int id, Vector2 pos) : PhysicsObject( true, pos, Vector2(0,0), Ve
 {
     m_id = id;
     //TO DO: Maybe make the color changable
-    m_color = SDL_MapRGB( Pong::getSurface()->format, 0x00, 0x00, 0x00 );
+    //m_color = SDL_MapRGB( Pong::getSurface()->format, 0x00, 0x00, 0x00 );
     setType(PhysicsObject::PhysicsObjectType::PADDLE);
 }
 
@@ -23,7 +23,7 @@ void Paddle::Render()
     pad.w = 10;
     pad.h = 40;
     
-    SDL_FillRect( Pong::getSurface(), &pad, m_color );
+    //SDL_FillRect( Pong::getSurface(), &pad, m_color );
 }
 
 void Paddle::StartMovingUp()

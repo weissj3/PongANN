@@ -9,23 +9,26 @@ ANNAITrainer::ANNAITrainer(ANNAI* p1, ANNAI* p2, unsigned int populationSize) : 
     m_generation = 0;
 }
 
-ANNAITrainer::ANNAITrainer(ANNAI* p1, ANNAI* p2, std::string loadFile) : m_player1(p1), m_player2(p2)
+ANNAITrainer::ANNAITrainer(ANNAI* p1, ANNAI* p2, std::string loadFile) : m_player1(p1), m_player2(p2), m_DE(20, p1->GetNumParams())
 {
     std::ifstream istr;
     istr.open(loadFile);
     if(!istr.is_open())
     {
-        throw std::string("Failed to load Differential Evolution File");
+        std::cerr << "Failed to load Differential Evolution File, starting new optimization" << std::endl;
     }
-    while(!istr.eof())
+    else
     {
-        std::string temp;
-        istr >> temp;
-        if(temp == "<DifferentialEvolution>")
-        {   
-            istr >> m_DE;
+        while(!istr.eof())
+        {
+            std::string temp;
+            istr >> temp;
+            if(temp == "<DifferentialEvolution>")
+            {   
+                istr >> m_DE;
+            }
         }
-    }
+    }    
     m_player1->updateParameters(m_DE.getParameter(0));
     m_player2->updateParameters(m_DE.getNewParams());
     m_generation = 0;

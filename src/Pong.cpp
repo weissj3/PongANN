@@ -43,16 +43,16 @@ void Pong::Initialize()
     
     //Make a window and fill with white rectange
 
-    m_window = SDL_CreateWindow( "PANN", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, m_SCREEN_WIDTH, m_SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+    //m_window = SDL_CreateWindow( "PANN", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, m_SCREEN_WIDTH, m_SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
     
-    if( m_window == nullptr )
-    {
-        std::cerr << "Windows could not be created! SDL_Error: " << SDL_GetError() << std::endl;
-        m_quit = true;
-        return;
-    }
+    //if( m_window == nullptr )
+    //{
+    //    std::cerr << "Windows could not be created! SDL_Error: " << SDL_GetError() << std::endl;
+    //    m_quit = true;
+    //    return;
+    //}
 
-    m_screenSurface = SDL_GetWindowSurface( m_window );
+    //m_screenSurface = SDL_GetWindowSurface( m_window );
     
     m_player1 = new ANNAI(1);
     m_player2 = new ANNAI(2);
@@ -69,7 +69,7 @@ void Pong::Initialize()
 void Pong::Run()
 {
     Initialize();
-    SDL_FillRect( m_screenSurface, NULL, SDL_MapRGB( m_screenSurface->format, 0xff, 0xff, 0xff ) );
+    //SDL_FillRect( m_screenSurface, NULL, SDL_MapRGB( m_screenSurface->format, 0xff, 0xff, 0xff ) );
     
     //TO DO:  Fix weird collisions between ball and paddle
     //        Make Collision off of Paddle Slightly curved
@@ -89,13 +89,13 @@ void Pong::Run()
         {
             SDL_Delay(5);  //Probably want to make this tunable to speed learning
         }
-        SDL_FillRect( m_screenSurface, NULL, SDL_MapRGB( m_screenSurface->format, 0xff, 0xff, 0xff ) );
+        //SDL_FillRect( m_screenSurface, NULL, SDL_MapRGB( m_screenSurface->format, 0xff, 0xff, 0xff ) );
         m_ball->Render();
         m_player1->Update();
         m_player2->Update();
         
         //To Do: Add Renderable List?
-        SDL_UpdateWindowSurface( m_window );
+        //SDL_UpdateWindowSurface( m_window );
         //Update Physics for the Game
         m_physicsHandler->UpdatePhysics();
     }
@@ -120,11 +120,11 @@ void Pong::CheckWinCondition()
         m_player2->ResetPaddle();
         m_ball->setPos(Vector2(SCREEN_WIDTH/2, SCREEN_HEIGHT/2));
         m_ball->setRandVel(5.0);
-        SDL_FillRect( m_screenSurface, NULL, SDL_MapRGB( m_screenSurface->format, 0xff, 0xff, 0xff ) );
+        //SDL_FillRect( m_screenSurface, NULL, SDL_MapRGB( m_screenSurface->format, 0xff, 0xff, 0xff ) );
         m_ball->Render();
         m_player1->Update();
         m_player2->Update();
-        SDL_UpdateWindowSurface( m_window );
+        //SDL_UpdateWindowSurface( m_window );
         if(m_player1->GetScore() + m_player2->GetScore() == 10)
         {
             std::cout << "Score:  " << m_player1->GetScore() << " to " << m_player2->GetScore() << std::endl;
@@ -137,7 +137,7 @@ void Pong::CheckWinCondition()
 
 void Pong::CleanUp()
 {
-    SDL_DestroyWindow( m_window );
+    //SDL_DestroyWindow( m_window );
     
     delete m_player1;
     delete m_player2;

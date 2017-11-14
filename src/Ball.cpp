@@ -5,7 +5,7 @@
 Ball::Ball( Vector2 pos, Vector2 vel, float rad ) : PhysicsObject( true, pos, vel, Vector2( 0,0 ), std::vector <Vector2> (1, Vector2(rad, 0)))
 {
     //TO DO: Maybe make the color changable
-    m_color = SDL_MapRGB( Pong::getSurface()->format, 0x00, 0x00, 0x00 );
+    //m_color = SDL_MapRGB( Pong::getSurface()->format, 0x00, 0x00, 0x00 );
     setType(PhysicsObject::PhysicsObjectType::BALL);
     m_roundNumber = 0;
 
@@ -20,7 +20,7 @@ void Ball::Render()
     pad.w = 5;
     pad.h = 5;
     
-    SDL_FillRect( Pong::getSurface(), &pad, m_color );
+    //SDL_FillRect( Pong::getSurface(), &pad, m_color );
 }
 
 void Ball::Collision(PhysicsObject* obj)

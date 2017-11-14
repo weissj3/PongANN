@@ -98,7 +98,7 @@ std::vector<float> ANN::Evaluate(std::vector<float> input)
             inputMat(i, j) = input[j];
         }
     }
-    
+
     //Run Feed Forward
     for( unsigned int i = 0; i < m_layers.size(); ++i )
     {       

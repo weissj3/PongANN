@@ -18,7 +18,7 @@ private:
 
 public:
 
-    ANNAI(unsigned int playerNum, unsigned int n_layers = 2, unsigned int n_nodes = 3);
+    ANNAI(unsigned int playerNum, unsigned int n_layers = 3, unsigned int n_nodes = 3);
     void updateParameters(const Parameters &newParams);
     Parameters& getParams();
     unsigned int GetNumParams();
