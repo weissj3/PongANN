@@ -87,7 +87,7 @@ void Pong::Run()
         GetInput();
         if(m_player1->GetType() == Player::PlayerType::HUMAN || m_player2->GetType() == Player::PlayerType::HUMAN || m_slow)
         {
-            SDL_Delay(5);  //Probably want to make this tunable to speed learning
+            SDL_Delay(1);  //Probably want to make this tunable to speed learning
         }
         //SDL_FillRect( m_screenSurface, NULL, SDL_MapRGB( m_screenSurface->format, 0xff, 0xff, 0xff ) );
         m_ball->Render();
