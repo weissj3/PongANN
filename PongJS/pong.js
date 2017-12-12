@@ -8,11 +8,12 @@ var height = 482;
 var width = 640;
 canvas.width = width;
 canvas.height = height;
-canvas.style = "position:absolute; left: 50%; width: 640px; margin-left: -320px;";
+canvas.style = "margin-left:auto; margin-right:auto";
 var context = canvas.getContext('2d');
 
 window.onload = function() {
-  document.body.appendChild(canvas);
+  var div = document.getElementById("PongCanvas");
+  div.appendChild(canvas);
   animate(step);
 };
 
