@@ -1,6 +1,7 @@
 #include "Optimizer.h"
 #include <limits>
 #include <iostream>
+#include <cfloat>
 
 Parameters::Parameters(unsigned int numParams, unsigned int id, float like) : m_values(numParams, 0), m_id(id), m_likelihood(like)
 {
@@ -72,8 +73,7 @@ Optimizer::Optimizer() :  m_rd(), m_mt(m_rd()), m_dist(0.0, 1.0), m_normDist(0.0
 {
 }
 
-//None of this is used or implemented yet. 
-Optimizer::Optimizer(unsigned int populationSize, unsigned int numParams) : m_rd(), m_mt(m_rd()), m_dist(0.0, 1.0), m_normDist(0.0, 2.0), m_currentResult(0), m_currentGeneration(0), m_parameters(populationSize, Parameters(numParams, 0)), m_upperBound(numParams, 1.0), m_lowerBound(numParams, 0.0)
+Optimizer::Optimizer(unsigned int populationSize, unsigned int numParams) : m_rd(), m_mt(m_rd()), m_dist(0.0, 1.0), m_normDist(0.0, 2.0), m_currentResult(0), m_currentGeneration(0), m_parameters(populationSize, Parameters(numParams, FLT_MIN)), m_upperBound(numParams, FLT_MAX), m_lowerBound(numParams, 0.0)
 {
     for(int i = 0; i < m_parameters.size(); i++)
     {
@@ -85,15 +85,18 @@ Optimizer::Optimizer(unsigned int populationSize, unsigned int numParams) : m_rd
     }
 }
 
-Optimizer::Optimizer(unsigned int populationSize, unsigned int numParams, const std::vector <float> &upper, const std::vector <float> &lower) : m_rd(), m_mt(m_rd()), m_dist(0.0, 1.0), m_currentResult(0), m_currentGeneration(0), m_parameters(populationSize, Parameters(numParams, 0)), m_upperBound(upper), m_lowerBound(lower)
+Optimizer::Optimizer(unsigned int populationSize, unsigned int numParams, const std::vector <float> &upper, const std::vector <float> &lower) : m_rd(), m_mt(m_rd()), m_dist(0.0, 1.0), m_normDist(0.0, 2.0), m_currentResult(0), m_currentGeneration(0), m_parameters(populationSize, Parameters(numParams, 0)),  m_upperBound(upper), m_lowerBound(lower)
 {
     
     for(int i = 0; i < m_parameters.size(); i++)
     {
         m_parameters[i].m_id = i;
-        for( int j = 0; i < m_parameters[i].m_values.size(); j++ )
+        for( int j = 0; j < m_parameters[i].m_values.size(); j++ )
         {
-            m_parameters[i].m_values[j] = m_dist(m_mt) * (m_upperBound[j] - m_lowerBound[j]) + m_lowerBound[j];
+            do
+            {
+                m_parameters[i].m_values[j] = m_normDist(m_mt);
+            } while(m_parameters[i].m_values[j] < lower[j] || m_parameters[i].m_values[j] > upper[j]);
         }
     }
 }

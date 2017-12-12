@@ -2,14 +2,14 @@
 #include <fstream>
 
 
-ANNAITrainer::ANNAITrainer(ANNAI* p1, ANNAI* p2, unsigned int populationSize) : m_player1(p1), m_player2(p2), m_DE(populationSize, p1->GetNumParams())
+ANNAITrainer::ANNAITrainer(ANNAI* p1, ANNAI* p2, unsigned int populationSize) : m_player1(p1), m_player2(p2), m_DE(populationSize, p1->GetNumParams(), std::vector<float>(10, p1->GetNumParams()), std::vector<float>(-10, p1->GetNumParams()))
 {
     m_player1->updateParameters(m_DE.getParameter(0));
     m_player2->updateParameters(m_DE.getNewParams());
     m_generation = 0;
 }
 
-ANNAITrainer::ANNAITrainer(ANNAI* p1, ANNAI* p2, std::string loadFile) : m_player1(p1), m_player2(p2), m_DE(20, p1->GetNumParams())
+ANNAITrainer::ANNAITrainer(ANNAI* p1, ANNAI* p2, std::string loadFile) : m_player1(p1), m_player2(p2), m_DE(20, p1->GetNumParams(), std::vector<float>(p1->GetNumParams(), 10), std::vector<float>(p1->GetNumParams(), -10))
 {
     std::ifstream istr;
     istr.open(loadFile);

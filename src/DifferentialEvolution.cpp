@@ -45,6 +45,29 @@ Parameters DifferentialEvolution::getNewParams()
         {
             newParameters.m_values[i] = Parent.m_values[i];
         }
+        bool runAgain = false;
+        int count = 0;
+        do {
+            runAgain = false; 
+            if (newParameters.m_values[i] < m_lowerBound[i]) 
+            {
+	            newParameters.m_values[i] = m_lowerBound[i] + (m_lowerBound[i] - newParameters.m_values[i]);
+                runAgain = true;
+                ++count;
+            }
+            if (newParameters.m_values[i] > m_upperBound[i]) 
+            {
+                newParameters.m_values[i] = m_upperBound[i] + (m_upperBound[i] - newParameters.m_values[i]);
+                runAgain = true;
+                ++count;
+            }
+            if (count > 20) 
+            {
+                std::string error; 
+                error = "ERROR: bound_parameters has looped >20 times.  Infinite loop detected.";
+                throw error;
+            }
+        } while(runAgain);
     }
     
     ++m_currentResult;
